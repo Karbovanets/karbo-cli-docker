@@ -1,0 +1,40 @@
+FROM debian:9-slim
+LABEL description="Karbo CLI image"
+LABEL repository="https://github.com/Karbovanets/karbo-cli-docker"
+LABEL helpdesk="https://t.me/karbo_dev_lounge"
+
+# change CLI version here to upgrade the image
+ENV CLI_VERSION="1.6.5"
+
+# Dependencies installation
+RUN apt-get update && apt-get install -y wget
+
+# add restricted user for running node
+RUN /bin/bash -c 'adduser --disabled-password --gecos "" karbo'
+
+# Deploy needed version of Karbo CLI
+WORKDIR /home/karbo
+RUN wget https://github.com/seredat/karbowanec/releases/download/v.$CLI_VERSION/karbo-cli-v$CLI_VERSION-64bit.tar.gz &&\
+	tar -xzvf karbo-cli-v$CLI_VERSION-64bit.tar.gz &&\
+	mv ./karbowanecd /usr/bin/karbowanecd &&\
+	mv ./walletd /usr/bin/walletd &&\
+	mv ./simplewallet /usr/bin/simplewallet &&\
+	mv ./greenwallet /usr/bin/greenwallet &&\
+	rm -f ./* &&\
+	chmod +x /usr/bin/karbowanecd /usr/bin/walletd /usr/bin/simplewallet /usr/bin/greenwallet
+
+# Create blockchain folder and assign owner to the files
+RUN /bin/bash -c 'mkdir /home/karbo/.karbowanec'
+RUN /bin/bash -c 'chown karbo:karbo /home/karbo/.karbowanec /usr/bin/karbowanecd /usr/bin/simplewallet /usr/bin/walletd /usr/bin/greenwallet '
+
+# Open container's ports for P2P and Lightwallet connections
+EXPOSE 32347/tcp 32348/tcp
+
+# Define blockchain volume
+VOLUME ["/home/karbo/.karbowanec"]
+
+# Default options for node
+CMD ["--fee-address=Kdev1L9V5ow3cdKNqDpLcFFxZCqu5W2GE9xMKewsB2pUXWxcXvJaUWHcSrHuZw91eYfQFzRtGfTemReSSMN4kE445i6Etb3"]
+
+# Default entrypoint, can be redefined if you need wallet
+ENTRYPOINT ["karbowanecd", "--data-dir=/home/karbo/.karbowanec", "--restricted-rpc", "--rpc-bind-ip=0.0.0.0", "--rpc-bind-port=32348"]
