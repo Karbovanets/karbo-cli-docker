@@ -15,6 +15,8 @@ There are few ways you can run masternode:
   1. Prepare environment ([link1](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [link2](https://docs.docker.com/compose/install/))
   2. Clone that repository
   3. Edit .env file for setting your optimal preferences
+  > Please pay attention to NODE_OWNER parameter. It is very useful if you can specify your email or messenger nickname so we can stay in touch with you, it's very useful in emergency cases such as hardforks and so on.
+
   4. *(Optional)* You can use a bootstrap for sync speedup. Use next command from repo home folder (where docker-compose.yml located): `wget https://bootstrap.karbo.io/latest.tar.gz -O ./data/node/latest.tar.gz && tar -xzvf ./data/node/latest.tar.gz -C ./data/node/ && rm ./data/node/latest.tar.gz`
   5. Run your node with next command: `docker-compose up -d karbo-node`
 
