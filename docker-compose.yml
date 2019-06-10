@@ -1,0 +1,92 @@
+version: '3.0'
+services:
+    karbo-node:
+        env_file: .env
+        container_name: karbo-node
+        ports:
+        - "$BIND_ADDRESS4:32347:32347"
+        - "$BIND_ADDRESS4:32348:32348"
+        # Uncomment only if you're know what you're doing
+        # - "$BIND_ADDRESS6:32347:32347"
+        # - "$BIND_ADDRESS6:32348:32348"
+        ## experimental features
+        ##cpu_count: '$CPU_ALLOC'
+        ##mem_limit: $MEM_ALLOC
+        #########################
+        restart: always
+        image: "karbovanets/karbo-cli:$VERSION"
+        volumes:
+        - "$BLOCKCHAIN_PATH:/home/karbo/.karbowanec"
+        command:
+        - "--fee-address=$FEE_ADDRESS"
+        - "--contact=$NODE_OWNER"
+        #- "--log-file=/home/karbo/.karbowanec/node.log" # Uncomment to enable logging
+        networks:
+        - karbo-int-network
+
+    karbo-simplewallet:
+        env_file: .env
+        container_name: karbo-simplewallet
+        # replace "expose" with "ports" if you want to bind to external IP, but it may be dangerous for security reasons, better to use some reverse proxy with restricted access
+        expose:
+        - $WALLET_RPC_PORT
+        restart: always
+        image: "karbovanets/karbo-cli:$VERSION"
+        volumes:
+        - "$WALLET_PATH:/home/karbo/wallets"
+        entrypoint:
+        - simplewallet
+#        #### Usual parameter set for general purposes operation ####
+        - --wallet-file=/home/karbo/wallets/$WALLET_FILENAME
+        - --password=$WALLET_PASS # comment this if wallet isn't encrypted with password
+        - --rpc-bind-port=$WALLET_RPC_PORT
+        - --rpc-bind-ip=0.0.0.0
+        - --daemon-host=karbo-node # local service as default, you can replace it with remote one
+        - --daemon-port=32348
+#        - --log-file=/home/karbo/wallets/simplewallet.log # Uncomment to enable logging
+#        - --reset # uncomment and run once to resync wallet file from zero
+#        #### Parameter set for creating new wallet with .env specified parameters  ####
+#        --daemon-host=karbo-node
+#        - --generate-new-wallet=/home/karbo/wallets/$WALLET_FILENAME
+#        - --password=$WALLET_PASS
+#        - --log-file=/home/karbo/wallets/your-new-wallet.log
+        networks:
+        - karbo-int-network
+
+#    karbo-walletd:
+#      env_file: .env_file
+#      container_name: karbo-walletd
+#      ports:
+#      - "$BIND_ADDRESS4:0:0"
+#      #- "$BIND_ADDRESS6:0:0"
+#      restart: always
+#      image: "karbovanets/karbo-cli:$VERSION"
+#      volumes:
+#      - "$BLOCKCHAIN_PATH:/home/karbo/.karbowanec"
+#      - "$WALLET_PATH:/home/karbo/wallets"
+#      entrypoint:
+#      networks:
+#      - karbo-int-network
+
+#    karbo-greenwallet:
+#      env_file: .env_file
+#      container_name: karbo-greenwallet
+#      ports:
+#        - "$BIND_ADDRESS4:0:0"
+#        - "$BIND_ADDRESS6:0:0"
+#      restart: always
+#      image: "karbovanets/karbo-cli:$VERSION"
+#      volumes:
+#      - "$WALLET_PATH:/home/karbo/wallets"
+#      entrypoint:
+#      - greenwallet
+#      - --remote-daemon=karbo-node
+#      - --wallet-file=/home/karbo/wallets/$WALLET_FILENAME
+#      - --password=$WALLET_PASS # comment this if wallet isn't encrypted with password
+#      - --log-file=/home/karbo/wallets/greenwallet.log # Uncomment to enable logging
+#      networks:
+#      - karbo-int-network
+
+networks:
+    karbo-int-network:
+      driver: bridge
