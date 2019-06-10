@@ -45,7 +45,12 @@ There are few ways you can run masternode:
   4. Enjoy
 
 #### Maintenance
-  1. TODO
+##### Get a newer node release
+  1. `docker pull karbovanets/karbo-cli`
+  2. `docker stop karbo-node`
+  3. `docker rm karbo-node`
+  4. `docker run -it --restart=always -p 32347:32347 -p 32348:32348 -v /home/.karbo:/home/karbo/.karbowanec --name=karbo-node -d karbovanets/karbo-cli --fee-address=*<your_wallet_address>*`
 
 # Credits
-Looongcat 2018
+  1. [Looongcat](https://github.com/Looongcat) 2019
+  2. If you're having some technical issues please feel free to visit our [tech chat](https://t.me/karbo_dev_lounge)
