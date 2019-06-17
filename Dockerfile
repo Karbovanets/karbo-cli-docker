@@ -4,18 +4,18 @@ LABEL repository="https://github.com/Karbovanets/karbo-cli-docker"
 LABEL helpdesk="https://t.me/karbo_dev_lounge"
 
 # change CLI version here to upgrade the image
-ENV CLI_VERSION="1.6.5"
+ENV CLI_VERSION="2.1.2"
 
 # Dependencies installation
 RUN apt-get update && apt-get install -y wget
 
 # add restricted user for running node
 RUN /bin/bash -c 'adduser --disabled-password --gecos "" karbo'
-
+#https://github.com/Karbovanets/karbo/releases/download/v.2.1.2/Karbo2-cli-v.2.1.2-64bit-trusty.tar.gz
 # Deploy needed version of Karbo CLI
 WORKDIR /home/karbo
-RUN wget https://github.com/seredat/karbowanec/releases/download/v.$CLI_VERSION/karbo-cli-v$CLI_VERSION-64bit.tar.gz &&\
-	tar -xzvf karbo-cli-v$CLI_VERSION-64bit.tar.gz &&\
+RUN wget https://github.com/Karbovanets/karbo/releases/download/v.$CLI_VERSION/Karbo2-cli-v.$CLI_VERSION-64bit-trusty.tar.gz &&\
+	tar -xzvf Karbo2-cli-v.$CLI_VERSION-64bit-trusty.tar.gz &&\
 	mv ./karbowanecd /usr/bin/karbowanecd &&\
 	mv ./walletd /usr/bin/walletd &&\
 	mv ./simplewallet /usr/bin/simplewallet &&\
