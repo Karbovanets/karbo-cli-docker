@@ -14,13 +14,13 @@ RUN /bin/bash -c 'adduser --disabled-password --gecos "" karbo'
 
 # Deploy needed version of Karbo CLI
 WORKDIR /home/karbo
-RUN wget https://github.com/seredat/karbowanec/releases/download/v.$CLI_VERSION/karbowanec-trusty-$CLI_VERSION_linux_x86_64.tar.gz &&\
-	tar -xzvf karbowanec-trusty-$CLI_VERSION_linux_x86_64.tar.gz &&\
-	mv ./karbowanecd /usr/bin/karbowanecd &&\
-	mv ./walletd /usr/bin/walletd &&\
-	mv ./simplewallet /usr/bin/simplewallet &&\
-	mv ./greenwallet /usr/bin/greenwallet &&\
-	rm -f ./* &&\
+RUN wget -q https://github.com/seredat/karbowanec/releases/download/v.$CLI_VERSION/karbowanec-trusty-$CLI_VERSION\_linux_x86_64.tar.gz &&\
+	tar -xzvf karbowanec-trusty-$CLI_VERSION\_linux_x86_64.tar.gz &&\
+	mv ./karbowanec-trusty-$CLI_VERSION\_linux_x86_64/karbowanecd /usr/bin/karbowanecd &&\
+	mv ./karbowanec-trusty-$CLI_VERSION\_linux_x86_64/walletd /usr/bin/walletd &&\
+	mv ./karbowanec-trusty-$CLI_VERSION\_linux_x86_64/simplewallet /usr/bin/simplewallet &&\
+	mv ./karbowanec-trusty-$CLI_VERSION\_linux_x86_64/greenwallet /usr/bin/greenwallet &&\
+	rm -rf ./* &&\
 	chmod +x /usr/bin/karbowanecd /usr/bin/walletd /usr/bin/simplewallet /usr/bin/greenwallet
 
 # Create blockchain folder and assign owner to the files
