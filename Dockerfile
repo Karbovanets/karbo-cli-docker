@@ -4,7 +4,7 @@ LABEL repository="https://github.com/Karbovanets/karbo-cli-docker"
 LABEL helpdesk="https://t.me/karbo_dev_lounge"
 
 # change CLI version here to upgrade the image
-ENV CLI_VERSION="1.6.5"
+ENV CLI_VERSION="1.6.6"
 
 # Dependencies installation
 RUN apt-get update && apt-get install -y wget
@@ -14,13 +14,13 @@ RUN /bin/bash -c 'adduser --disabled-password --gecos "" karbo'
 
 # Deploy needed version of Karbo CLI
 WORKDIR /home/karbo
-RUN wget https://github.com/seredat/karbowanec/releases/download/v.$CLI_VERSION/karbo-cli-v$CLI_VERSION-64bit.tar.gz &&\
-	tar -xzvf karbo-cli-v$CLI_VERSION-64bit.tar.gz &&\
-	mv ./karbowanecd /usr/bin/karbowanecd &&\
-	mv ./walletd /usr/bin/walletd &&\
-	mv ./simplewallet /usr/bin/simplewallet &&\
-	mv ./greenwallet /usr/bin/greenwallet &&\
-	rm -f ./* &&\
+RUN wget -q https://github.com/seredat/karbowanec/releases/download/v.$CLI_VERSION/karbowanec-trusty-$CLI_VERSION\_linux_x86_64.tar.gz &&\
+	tar -xzvf karbowanec-trusty-$CLI_VERSION\_linux_x86_64.tar.gz &&\
+	mv ./karbowanec-trusty-$CLI_VERSION\_linux_x86_64/karbowanecd /usr/bin/karbowanecd &&\
+	mv ./karbowanec-trusty-$CLI_VERSION\_linux_x86_64/walletd /usr/bin/walletd &&\
+	mv ./karbowanec-trusty-$CLI_VERSION\_linux_x86_64/simplewallet /usr/bin/simplewallet &&\
+	mv ./karbowanec-trusty-$CLI_VERSION\_linux_x86_64/greenwallet /usr/bin/greenwallet &&\
+	rm -rf ./* &&\
 	chmod +x /usr/bin/karbowanecd /usr/bin/walletd /usr/bin/simplewallet /usr/bin/greenwallet
 
 # Create blockchain folder and assign owner to the files
