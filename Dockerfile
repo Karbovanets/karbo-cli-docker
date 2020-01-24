@@ -15,8 +15,8 @@ RUN /bin/bash -c 'adduser --disabled-password --gecos "" karbo'
 # Deploy needed version of Karbo CLI
 WORKDIR /home/karbo
 
-RUN wget -q https://github.com/seredat/karbowanec/releases/download/v.$CLI_VERSION\/Karbo-cli-xenial-v$CLI_VERSION\-64-bit.tar.gz &&\
-	tar -xzvf Karbo-cli-xenial-v$CLI_VERSION\-64-bit.tar.gz &&\
+RUN wget -q https://github.com/seredat/karbowanec/releases/download/v.$CLI_VERSION\/karbowanec-trusty-$CLI_VERSION\_linux_x86_64.tar.gz &&\
+	tar -xzvf karbowanec-trusty-$CLI_VERSION\_linux_x86_64.tar.gz &&\
 	mv ./karbowanecd /usr/bin/karbowanecd &&\
 	mv ./walletd /usr/bin/walletd &&\
 	mv ./simplewallet /usr/bin/simplewallet &&\
