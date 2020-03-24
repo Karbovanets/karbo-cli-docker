@@ -5,7 +5,6 @@ LABEL helpdesk="https://t.me/karbo_dev_lounge"
 
 # change CLI version here to upgrade the image
 ENV CLI_VERSION 1.7.2
-ENV CLI_VERSION_CUT 172
 
 # Dependencies installation
 RUN apt-get update && apt-get install -y wget
@@ -18,11 +17,11 @@ WORKDIR /home/karbo
 
 RUN wget -q https://github.com/seredat/karbowanec/releases/download/v.$CLI_VERSION\/Karbo-cli-ubuntu16.04-v.$CLI_VERSION.tar.gz &&\
 	tar -xzvf Karbo-cli-ubuntu16.04-v.$CLI_VERSION.tar.gz &&\
-	mv ./v$CLI_VERSION_CUT/karbowanecd /usr/bin/karbowanecd &&\
-	mv ./v$CLI_VERSION_CUT/walletd /usr/bin/walletd &&\
-	mv ./v$CLI_VERSION_CUT/simplewallet /usr/bin/simplewallet &&\
-	mv ./v$CLI_VERSION_CUT/greenwallet /usr/bin/greenwallet &&\
-	mv ./v$CLI_VERSION_CUT/optimizer /usr/bin/optimizer &&\
+	mv ./karbowanecd /usr/bin/karbowanecd &&\
+	mv ./walletd /usr/bin/walletd &&\
+	mv ./simplewallet /usr/bin/simplewallet &&\
+	mv ./greenwallet /usr/bin/greenwallet &&\
+	mv ./optimizer /usr/bin/optimizer &&\
 	rm -rf ./* &&\
 	chmod +x /usr/bin/karbowanecd /usr/bin/walletd /usr/bin/simplewallet /usr/bin/greenwallet /usr/bin/optimizer
 
