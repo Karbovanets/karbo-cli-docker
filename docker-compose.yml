@@ -19,6 +19,7 @@ services:
         - "$BLOCKCHAIN_PATH:/home/karbo/.karbowanec"
         command:
         - "--fee-address=$FEE_ADDRESS"
+        - "--fee-amount=$FEE_AMOUNT"
         - "--contact=$NODE_OWNER"
         #- "--log-file=/home/karbo/.karbowanec/node.log" # Uncomment to enable logging
         networks:

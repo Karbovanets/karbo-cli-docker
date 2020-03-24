@@ -4,7 +4,7 @@ LABEL repository="https://github.com/Karbovanets/karbo-cli-docker"
 LABEL helpdesk="https://t.me/karbo_dev_lounge"
 
 # change CLI version here to upgrade the image
-ENV CLI_VERSION 1.7.1
+ENV CLI_VERSION 1.7.2
 
 # Dependencies installation
 RUN apt-get update && apt-get install -y wget
@@ -15,8 +15,8 @@ RUN /bin/bash -c 'adduser --disabled-password --gecos "" karbo'
 # Deploy needed version of Karbo CLI
 WORKDIR /home/karbo
 
-RUN wget -q https://github.com/seredat/karbowanec/releases/download/v.$CLI_VERSION\/karbowanec-trusty-$CLI_VERSION\_linux_x86_64.tar.gz &&\
-	tar -xzvf karbowanec-trusty-$CLI_VERSION\_linux_x86_64.tar.gz &&\
+RUN wget -q https://github.com/seredat/karbowanec/releases/download/v.$CLI_VERSION\/Karbo-cli-ubuntu16.04-v.$CLI_VERSION.tar.gz &&\
+	tar -xzvf Karbo-cli-ubuntu16.04-v.$CLI_VERSION.tar.gz &&\
 	mv ./karbowanecd /usr/bin/karbowanecd &&\
 	mv ./walletd /usr/bin/walletd &&\
 	mv ./simplewallet /usr/bin/simplewallet &&\
@@ -36,7 +36,7 @@ EXPOSE 32347/tcp 32348/tcp
 VOLUME ["/home/karbo/.karbowanec"]
 
 # Default options for node
-CMD ["--fee-address=Kdev1L9V5ow3cdKNqDpLcFFxZCqu5W2GE9xMKewsB2pUXWxcXvJaUWHcSrHuZw91eYfQFzRtGfTemReSSMN4kE445i6Etb3"]
+CMD ["--fee-address=Kdev1L9V5ow3cdKNqDpLcFFxZCqu5W2GE9xMKewsB2pUXWxcXvJaUWHcSrHuZw91eYfQFzRtGfTemReSSMN4kE445i6Etb3", "--fee-amount=0.1"]
 
 # Default entrypoint, can be redefined if you need wallet
 ENTRYPOINT ["karbowanecd", "--data-dir=/home/karbo/.karbowanec", "--restricted-rpc", "--rpc-bind-ip=0.0.0.0", "--rpc-bind-port=32348"]
