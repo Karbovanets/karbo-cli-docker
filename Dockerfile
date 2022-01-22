@@ -4,7 +4,7 @@ LABEL repository="https://github.com/Karbovanets/karbo-cli-docker"
 LABEL helpdesk="https://t.me/karbo_dev_lounge"
 
 # change CLI version here to upgrade the image
-ENV CLI_VERSION 1.9.6
+ENV CLI_VERSION 1.9.7
 
 # Dependencies installation
 RUN apt-get update && apt-get install -y wget
