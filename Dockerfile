@@ -1,10 +1,9 @@
-FROM debian:10-slim
+FROM debian:11-slim
 LABEL description="Karbo CLI image"
 LABEL repository="https://github.com/Karbovanets/karbo-cli-docker"
 LABEL helpdesk="https://t.me/karbo_dev_lounge"
 
-# change CLI version here to upgrade the image
-ENV CLI_VERSION 1.9.0
+ENV CLI_VERSION 1.10.4
 
 # Dependencies installation
 RUN apt-get update && apt-get install -y wget
@@ -15,8 +14,8 @@ RUN /bin/bash -c 'adduser --disabled-password --gecos "" karbo'
 # Deploy needed version of Karbo CLI
 WORKDIR /home/karbo
 
-RUN wget -q https://github.com/seredat/karbowanec/releases/download/v.$CLI_VERSION\/Karbo-cli-ubuntu18.04-v.$CLI_VERSION.tar.gz &&\
-	tar -xzvf Karbo-cli-ubuntu18.04-v.$CLI_VERSION.tar.gz &&\
+RUN wget -q https://github.com/seredat/karbowanec/releases/download/v.$CLI_VERSION\/Karbo-cli-ubuntu20.04-v.$CLI_VERSION.tar.gz &&\
+	tar -xzvf Karbo-cli-ubuntu20.04-v.$CLI_VERSION.tar.gz &&\
 	mv ./karbowanecd /usr/bin/karbowanecd &&\
 	mv ./walletd /usr/bin/walletd &&\
 	mv ./simplewallet /usr/bin/simplewallet &&\
